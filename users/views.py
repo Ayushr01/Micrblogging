@@ -87,7 +87,7 @@ class LogoutAPIView(APIView):
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (UserApiPermissions,)
     http_method_names = ['get', 'patch' ]
     lookup_field = "pk"
 
