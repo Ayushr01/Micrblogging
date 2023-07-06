@@ -7,7 +7,6 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import check_password
-from rest_framework import status
 from users.permissions import UserApiPermissions
 
 from users.serializers import UserRegistraionSerializer, UserSerializer
@@ -88,8 +87,8 @@ class LogoutAPIView(APIView):
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (UserApiPermissions,)
-    http_method_names = ['get', 'put', 'patch' ]
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ['get', 'patch' ]
     lookup_field = "pk"
 
 
