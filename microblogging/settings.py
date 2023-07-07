@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+APPEND_SLASH = True
 CACHE_TTL = 60 * 15
 
 CACHES = {

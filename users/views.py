@@ -7,9 +7,11 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import check_password
+from posts.models import Post
 from users.permissions import UserApiPermissions
+from rest_framework import generics
 
-from users.serializers import UserRegistraionSerializer, UserSerializer
+from users.serializers import UserRegistraionSerializer, UserSerializer, UserTimeLineSerializer
 from users.models import User
 
 class UserRegisterAPIView(APIView):
@@ -84,11 +86,23 @@ class LogoutAPIView(APIView):
         request.user.auth_token.delete()
         return Response("Logged out Successfully")
 
+
 class UserViewSet(ModelViewSet):
+    """
+    Viewset to get, patch a user data
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (UserApiPermissions,)
     http_method_names = ['get', 'patch' ]
     lookup_field = "pk"
 
+
+class UserTimeineAPIView(generics.ListAPIView):
+    """
+    Gets all posts for a user to see on his timeline
+    """
+    queryset = Post.objects.all()
+    serializer_class = UserTimeLineSerializer
+    http_method_names = ['get']
 
